@@ -12,7 +12,6 @@ public class TileEntityFPSensor extends TileEntity {
 
 	public boolean getPrint(EntityPlayer par5EntityPlayer, World world) {
 		//world.notifyBlockChange(xCoord, yCoord, zCoord, 2);
-		System.out.println(owner + "==" + par5EntityPlayer.getEntityName());
 		if(owner.equals(par5EntityPlayer.getEntityName()))
         {
 			return true;
