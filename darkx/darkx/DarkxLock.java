@@ -16,7 +16,7 @@ import darkx.darkxcore.proxy.CommonProxy;
 import darkx.darkxlock.item.ModItems;
 
 @Mod(modid="darkxLock", name="Darkx's Lock 'n Key", version=Reference.VERSION, dependencies=Reference.DEPENDENCY_CORE)
-@NetworkMod(channels = { Reference.CHANNEL_NAME }, clientSideRequired = true, serverSideRequired = false)
+//@NetworkMod(channels = { Reference.CHANNEL_NAME }, clientSideRequired = true, serverSideRequired = false)
 
 public class DarkxLock {
 

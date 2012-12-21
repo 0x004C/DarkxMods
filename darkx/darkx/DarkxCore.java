@@ -21,7 +21,7 @@ import darkx.darkxcore.proxy.CommonProxy;
 
 
 @Mod(modid = "darkxCore", name = "DarkxCore", version = Reference.VERSION)
-@NetworkMod(channels = { Reference.CHANNEL_NAME }, clientSideRequired = true, serverSideRequired = true)
+//@NetworkMod(channels = { Reference.CHANNEL_NAME }, clientSideRequired = true, serverSideRequired = true)
 public class DarkxCore {
 
 	    // The instance of your mod that Forge uses.
