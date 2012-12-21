@@ -13,9 +13,7 @@ import darkx.darkxcore.network.PacketDarkx;
 import darkx.darkxcore.proxy.ClientProxy;
 import darkx.darkxcore.proxy.CommonProxy;
 import darkx.darkxauth.network.PacketAuthA;
-import net.minecraft.src.INetworkManager;
-import net.minecraft.src.Packet;
-import net.minecraft.src.Packet250CustomPayload;
+import net.minecraft.network.INetworkManager;
 
 public class PacketAuthQ extends PacketDarkx {
 

@@ -1,11 +1,9 @@
 package darkx;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.BlockPressurePlate;
-import net.minecraft.src.EnumMobType;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.Material;
-import net.minecraft.src.StepSound;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockPressurePlate;
+import net.minecraft.block.StepSound;
+import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;

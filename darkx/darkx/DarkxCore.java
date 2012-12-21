@@ -2,11 +2,6 @@ package darkx;
 
 import java.util.logging.Level;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.BlockPressurePlate;
-import net.minecraft.src.EnumMobType;
-import net.minecraft.src.Material;
-import net.minecraft.src.StepSound;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;

@@ -1,10 +1,10 @@
 package darkx.darkxcore.proxy;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.network.packet.Packet;
 import cpw.mods.fml.common.SidedProxy;
 import darkx.darkxcore.network.PacketDarkx;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.EntityPlayerMP;
-import net.minecraft.src.Packet;
 
 public class CommonProxy {
 	// Client stuff

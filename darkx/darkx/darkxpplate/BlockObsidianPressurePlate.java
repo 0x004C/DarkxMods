@@ -1,9 +1,9 @@
 package darkx.darkxpplate;
 
+import net.minecraft.block.BlockPressurePlate;
+import net.minecraft.block.EnumMobType;
+import net.minecraft.block.material.Material;
 import darkx.darkxcore.lib.Defaults;
-import net.minecraft.src.BlockPressurePlate;
-import net.minecraft.src.EnumMobType;
-import net.minecraft.src.Material;
 
 public class BlockObsidianPressurePlate extends BlockPressurePlate {
 
