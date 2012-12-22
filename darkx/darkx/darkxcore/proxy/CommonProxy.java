@@ -16,4 +16,6 @@ public class CommonProxy {
 	}
 
 	public void sendToServer(Packet packet) {}
+
+	public void addTexture(String string) {}
 }

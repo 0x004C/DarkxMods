@@ -15,4 +15,8 @@ public class ClientProxy extends CommonProxy {
 		FMLClientHandler.instance().getClient().getSendQueue().addToSendQueue(packet);
 	}
 	
+	public void addTexture(String texture) {
+		MinecraftForgeClient.preloadTexture(texture);
+	}
+	
 }

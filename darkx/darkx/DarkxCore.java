@@ -17,6 +17,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 import darkx.darkxcore.lib.Reference;
+import darkx.darkxcore.proxy.ClientProxy;
 import darkx.darkxcore.proxy.CommonProxy;
 
 
@@ -30,6 +31,8 @@ public class DarkxCore {
 
 	    @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
 	    public static CommonProxy proxy;
+
+		public static ClientProxy clientProxy;
 			
 		@PreInit
 		public void preInit(FMLPreInitializationEvent event) {

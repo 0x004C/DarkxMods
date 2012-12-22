@@ -7,6 +7,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class ItemFPSensor extends Item {
@@ -18,6 +19,10 @@ public class ItemFPSensor extends Item {
         setIconIndex(0);
         setItemName("itemFBSensor");
 	}
+	
+	public String getTextureFile () {
+        return DarkxSInput.ITEMS_PNG;
+}
 	
 	@Override //TODO: check if block has GUI to be opened, and apply crouch placing :)
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
@@ -39,7 +44,13 @@ public class ItemFPSensor extends Item {
 		if (DarkxSInput.instance.sensor.canPlaceBlockAt(world, x, y, z))
         {
             --stack.stackSize;
-            world.setBlockAndMetadataWithNotify(x, y, z, Defaults.FINGER_PRINT_SENSOR_ID, side);
+            world.setBlockAndMetadataWithNotify(x, y, z, Defaults.FINGER_PRINT_SENSOR_ID, side - 2);
+    		TileEntity te = world.getBlockTileEntity(x, y, z);
+            if (te != null && te instanceof TileEntityFPSensor)
+            {
+                ((TileEntityFPSensor) te).setPrint(player);
+                world.markBlockForUpdate(x, y, z);
+            }
             return true;
         } else
         	return false;

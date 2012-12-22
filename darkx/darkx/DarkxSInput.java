@@ -24,6 +24,7 @@ import darkx.darkxsinput.BlockObsidianPressurePlate;
 import darkx.darkxsinput.ItemFPSensor;
 import darkx.darkxsinput.TileEntityFPSensor;
 import darkx.darkxcore.lib.Reference;
+import darkx.darkxcore.proxy.ClientProxy;
 import darkx.darkxcore.proxy.CommonProxy;
 
 @Mod(modid="darkxSInput", name="Darkx's Special Inputs", version=Reference.VERSION, dependencies=Reference.DEPENDENCY_CORE)
@@ -35,11 +36,15 @@ public class DarkxSInput {
 	public Block blockObsidianPressurePlate = new BlockObsidianPressurePlate().setHardness(0.5F).setStepSound(soundStoneFootstep).setBlockName("pressurePlate").setRequiresSelfNotify();
 	public Block sensor = (new BlockFPSensor()).setHardness(0.5F).setStepSound(soundStoneFootstep).setBlockName("button").setRequiresSelfNotify();
 	public Item itemSensor = new ItemFPSensor();
+	
+	public static String ITEMS_PNG = "/darkx/darkxsinput/items.png";
 
         // The instance of your mod that Forge uses.
 	@Instance("darkxSInput")
 	public static DarkxSInput instance;
 	
+	@SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS,
+            serverSide = Reference.SERVER_PROXY_CLASS)
 	public static CommonProxy proxy = DarkxCore.proxy;
 	
 	@PreInit
@@ -50,6 +55,7 @@ public class DarkxSInput {
 	@Init
 	public void load(FMLInitializationEvent event) {
 		proxy.registerRenderers();
+		proxy.addTexture(ITEMS_PNG);
 		
 		GameRegistry.registerBlock(blockObsidianPressurePlate, "obsidianPressurePlate");
 		GameRegistry.registerBlock(sensor, "fpSensor");
