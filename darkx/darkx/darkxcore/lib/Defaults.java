@@ -5,4 +5,5 @@ public class Defaults {
 	public static int FINGER_PRINT_SENSOR_ID = 1338;
 	public static int IRON_LOCK_ID = 28000;
 	public static int IRON_KEY_ID = 28001;
+	public static int ITEM_FINGER_PRINT_SENSOR_ID = 28002;
 }
