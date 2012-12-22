@@ -24,15 +24,18 @@ import net.minecraftforge.common.ForgeDirection;
 public class BlockFPSensor extends BlockContainer {
 
 	public BlockFPSensor() {
-		super(Defaults.FINGER_PRINT_SENSOR_ID, blockSteel.blockIndexInTexture, Material.circuits);
+		super(Defaults.FINGER_PRINT_SENSOR_ID, 0, Material.circuits);
 		this.setTickRandomly(true);
-		//this.setBlockBounds(0.0F, 0.4F, 0.375F, 0.0165F, 0.8F, 1.0F - 0.375F);
+	}
+	
+	public String getTextureFile () {
+        return DarkxSInput.FPSENSORBLOCK_PNG;
 	}
 	
 	@Override
 	public int tickRate()
 	{
-	         return 20;
+	         return 30;
 	}
 	@Override
 	public boolean isOpaqueCube()
@@ -51,7 +54,6 @@ public class BlockFPSensor extends BlockContainer {
         return DarkxSInput.instance.itemSensor.shiftedIndex;
     }
 	
-	// TODO: Check if the block attached to is still there
 	@Override
 	public void breakBlock(World world, int x, int y, int z, int par5, int par6)
     {
@@ -93,9 +95,13 @@ public class BlockFPSensor extends BlockContainer {
     {
 		int meta = iblockaccess.getBlockMetadata(x, y, z);
 		if (meta > 4)
+		{
 			return true; 
+		}
 		else
+		{
 			return false;
+		}
     }
 
     public TileEntity createNewTileEntity(World par1World)
@@ -114,6 +120,7 @@ public class BlockFPSensor extends BlockContainer {
 				int meta = par1World.getBlockMetadata(par2, par3, par4);
 				if (meta < 4) {
 					par1World.setBlockMetadataWithNotify(par2, par3, par4, meta + 4);
+					NotifyNeightbours(par1World, par2, par3, par4);
 					//par1World.markBlockRangeForRenderUpdate(par2, par3, par4, par2, par3, par4); TODO: Add a nice renderer
 					par1World.playSoundEffect((double)par2 + 0.5D, (double)par3 + 0.5D, (double)par4 + 0.5D, "random.click", 0.3F, 0.6F);
 					par1World.scheduleBlockUpdate(par2, par3, par4, this.blockID, this.tickRate());
@@ -133,6 +140,7 @@ public class BlockFPSensor extends BlockContainer {
         	if (meta > 4)
         	{
         		par1World.setBlockMetadataWithNotify(par2, par3, par4, meta - 4);
+        		NotifyNeightbours(par1World, par2, par3, par4);
         		par1World.playSoundEffect((double)par2 + 0.5D, (double)par3 + 0.5D, (double)par4 + 0.5D, "random.click", 0.3F, 0.5F);
                 //par1World.markBlockRangeForRenderUpdate(par2, par3, par4, par2, par3, par4); TODO: Render here too
         	}
@@ -159,19 +167,21 @@ public class BlockFPSensor extends BlockContainer {
 		float offW = 0.375F;
 		float offD = 0.0165F;
 		
-		if (side == 0)
+		if (side % 4 == 0)
 			this.setBlockBounds(offW, minH, 1.0F - offD, 1.0F - offW, maxH, 1.0F);
-		else if (side == 1)
+		else if (side % 4 == 1)
 			this.setBlockBounds(offW, minH, 0.0F, 1.0F - offW, maxH, offD);
-		else if (side == 2)
+		else if (side % 4 == 2)
 			this.setBlockBounds(1.0F - offD, minH, offW, 1.0F, maxH, 1.0F - offW);
-		else if (side == 3)
+		else if (side % 4 == 3)
 			this.setBlockBounds(0.0F, minH, offW, offD, maxH, 1.0F - offW);
+		else
+			return;
 		
     }
 	
 	private Point getBlockAttachedTo(World world, int x, int y, int z) {
-		ForgeDirection dir = ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z) + 2);
+		ForgeDirection dir = ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z) % 4 + 2);
 		dir = dir.getOpposite();
 		if (dir == ForgeDirection.NORTH)
 			--z;
@@ -182,7 +192,6 @@ public class BlockFPSensor extends BlockContainer {
 		if (dir == ForgeDirection.EAST)
 			++x;
 		Point point = new Point(x, y, z);
-		System.out.println(x + "," + y + "," + z);
 		return point;
 	}
 	

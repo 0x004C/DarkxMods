@@ -21,7 +21,7 @@ public class ItemFPSensor extends Item {
 	}
 	
 	public String getTextureFile () {
-        return DarkxSInput.ITEMS_PNG;
+        return DarkxSInput.FPSENSOR_PNG;
 }
 	
 	@Override //TODO: check if block has GUI to be opened, and apply crouch placing :)

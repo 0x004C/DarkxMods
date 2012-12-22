@@ -37,7 +37,8 @@ public class DarkxSInput {
 	public Block sensor = (new BlockFPSensor()).setHardness(0.5F).setStepSound(soundStoneFootstep).setBlockName("button").setRequiresSelfNotify();
 	public Item itemSensor = new ItemFPSensor();
 	
-	public static String ITEMS_PNG = "/darkx/darkxsinput/items.png";
+	public static String FPSENSOR_PNG = "/darkx/darkxsinput/fpsensor.png";
+	public static String FPSENSORBLOCK_PNG = "/darkx/darkxsinput/fpsensorblock.png";
 
         // The instance of your mod that Forge uses.
 	@Instance("darkxSInput")
@@ -46,7 +47,7 @@ public class DarkxSInput {
 	@SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS,
             serverSide = Reference.SERVER_PROXY_CLASS)
 	public static CommonProxy proxy = DarkxCore.proxy;
-	
+
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event) {
 		// Stub Method
@@ -55,7 +56,8 @@ public class DarkxSInput {
 	@Init
 	public void load(FMLInitializationEvent event) {
 		proxy.registerRenderers();
-		proxy.addTexture(ITEMS_PNG);
+		proxy.addTexture(FPSENSOR_PNG);
+		proxy.addTexture(FPSENSORBLOCK_PNG);
 		
 		GameRegistry.registerBlock(blockObsidianPressurePlate, "obsidianPressurePlate");
 		GameRegistry.registerBlock(sensor, "fpSensor");
