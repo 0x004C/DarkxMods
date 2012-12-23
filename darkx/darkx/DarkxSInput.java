@@ -28,7 +28,6 @@ import darkx.darkxcore.proxy.ClientProxy;
 import darkx.darkxcore.proxy.CommonProxy;
 
 @Mod(modid="darkxSInput", name="Darkx's Special Inputs", version=Reference.VERSION, dependencies=Reference.DEPENDENCY_CORE)
-//@NetworkMod(channels = { Reference.CHANNEL_NAME }, clientSideRequired = true, serverSideRequired = false)
 
 public class DarkxSInput {
 	

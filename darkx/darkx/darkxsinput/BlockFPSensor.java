@@ -16,6 +16,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Facing;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -47,6 +48,12 @@ public class BlockFPSensor extends BlockContainer {
 	{
 	         return false;
 	}
+	
+	@Override
+	public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    {
+        return null;
+    }
 	
 	@Override
 	public int idDropped(int par1, Random par2Random, int par3)
@@ -94,12 +101,14 @@ public class BlockFPSensor extends BlockContainer {
     public boolean isProvidingStrongPower(IBlockAccess iblockaccess, int x, int y, int z, int direction)
     {
 		int meta = iblockaccess.getBlockMetadata(x, y, z);
-		if (meta > 4)
+		if (meta > 3)
 		{
+			this.blockIndexInTexture = 1; // This is just a temporary, not intended to change ALL sensors green
 			return true; 
 		}
 		else
 		{
+			this.blockIndexInTexture = 0;
 			return false;
 		}
     }
@@ -137,7 +146,7 @@ public class BlockFPSensor extends BlockContainer {
         if (!par1World.isRemote)
         {
         	int meta = par1World.getBlockMetadata(par2, par3, par4);
-        	if (meta > 4)
+        	if (meta > 3)
         	{
         		par1World.setBlockMetadataWithNotify(par2, par3, par4, meta - 4);
         		NotifyNeightbours(par1World, par2, par3, par4);
