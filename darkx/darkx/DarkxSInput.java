@@ -85,8 +85,9 @@ public class DarkxSInput {
 		sensor = (new BlockFPSensor()).setHardness(0.5F).setStepSound(soundStoneFootstep).setBlockName(infoSensor.name).setRequiresSelfNotify();
 		GameRegistry.registerBlock(sensor, infoSensor.name);
 		GameRegistry.registerTileEntity(TileEntityFPSensor.class, "fpSensor");
-		GameRegistry.addRecipe(new ItemStack(itemSensor), "i","i", 
-				'i', new ItemStack(Block.blockSteel));
+		GameRegistry.addRecipe(new ItemStack(itemSensor), "r","i", 
+				'r', new ItemStack(Item.redstone),
+				'i', new ItemStack(Item.ingotIron));
 		
 		// Obsidian Pressure Plate
 		obsidianPPlate = new BlockObsidianPressurePlate().setHardness(0.5F).setStepSound(soundStoneFootstep).setBlockName("pressurePlate").setRequiresSelfNotify();
