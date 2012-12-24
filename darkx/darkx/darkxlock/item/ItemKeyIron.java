@@ -1,6 +1,5 @@
 package darkx.darkxlock.item;
 
-import darkx.darkxcore.lib.Reference;
 
 public class ItemKeyIron extends ItemKey {
 

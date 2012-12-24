@@ -4,16 +4,12 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import net.minecraft.network.INetworkManager;
 import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;
 import darkx.DarkxCore;
 import darkx.darkxcore.lib.PacketIds;
 import darkx.darkxcore.network.PacketDarkx;
-import darkx.darkxcore.proxy.ClientProxy;
-import darkx.darkxcore.proxy.CommonProxy;
-import darkx.darkxauth.network.PacketAuthA;
-import net.minecraft.network.INetworkManager;
 
 public class PacketAuthQ extends PacketDarkx {
 

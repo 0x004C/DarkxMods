@@ -8,9 +8,7 @@ import java.io.IOException;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
-
 import cpw.mods.fml.common.network.Player;
-
 import darkx.darkxcore.lib.Reference;
 
 public abstract class PacketDarkx {

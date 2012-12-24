@@ -3,7 +3,6 @@ package darkx.darkxcore.proxy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.packet.Packet;
-import cpw.mods.fml.common.SidedProxy;
 import darkx.darkxcore.network.PacketDarkx;
 
 public class CommonProxy {

@@ -1,27 +1,29 @@
 package darkx.darkxsinput;
 
-import darkx.DarkxSInput;
-import darkx.darkxcore.lib.Defaults;
-import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import darkx.DarkxSInput;
+import darkx.darkxcore.lib.ItemInfo;
 
 public class ItemFPSensor extends Item {
+	
+	public static ItemInfo info;
 
 	public ItemFPSensor() {
-		super(Defaults.ITEM_FINGER_PRINT_SENSOR_ID);
+		super(DarkxSInput.instance.infoItemSensor.id);
+		this.info = DarkxSInput.instance.infoItemSensor;
 		maxStackSize = 16;
 		setCreativeTab(CreativeTabs.tabRedstone);
         setIconIndex(0);
-        setItemName("itemFBSensor");
+        setItemName(info.name);
 	}
 	
 	public String getTextureFile () {
-        return DarkxSInput.FPSENSOR_PNG;
+        return DarkxSInput.instance.infoItemSensor.texture.location;
 }
 	
 	@Override //TODO: check if block has GUI to be opened, and apply crouch placing :)
@@ -44,7 +46,7 @@ public class ItemFPSensor extends Item {
 		if (DarkxSInput.instance.sensor.canPlaceBlockAt(world, x, y, z))
         {
             --stack.stackSize;
-            world.setBlockAndMetadataWithNotify(x, y, z, Defaults.FINGER_PRINT_SENSOR_ID, side - 2);
+            world.setBlockAndMetadataWithNotify(x, y, z, info.id, side - 2);
     		TileEntity te = world.getBlockTileEntity(x, y, z);
             if (te != null && te instanceof TileEntityFPSensor)
             {

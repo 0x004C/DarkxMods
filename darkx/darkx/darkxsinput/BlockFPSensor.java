@@ -1,36 +1,32 @@
 package darkx.darkxsinput;
 
 import java.util.Random;
-import java.util.logging.Level;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import darkx.DarkxSInput;
-import darkx.darkxcore.lib.Defaults;
-import darkx.darkxcore.lib.Point;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Facing;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import darkx.DarkxSInput;
+import darkx.darkxcore.lib.BlockInfo;
+import darkx.darkxcore.lib.Point;
 
 public class BlockFPSensor extends BlockContainer {
+	
+	public static BlockInfo info;
 
 	public BlockFPSensor() {
-		super(Defaults.FINGER_PRINT_SENSOR_ID, 0, Material.circuits);
+		super(DarkxSInput.instance.infoSensor.id, 0, Material.circuits);
 		this.setTickRandomly(true);
+		this.info = DarkxSInput.instance.infoSensor;
 	}
 	
 	public String getTextureFile () {
-        return DarkxSInput.FPSENSORBLOCK_PNG;
+        return DarkxSInput.instance.infoSensor.texture.location;
 	}
 	
 	@Override
@@ -103,7 +99,7 @@ public class BlockFPSensor extends BlockContainer {
 		int meta = iblockaccess.getBlockMetadata(x, y, z);
 		if (meta > 3)
 		{
-			this.blockIndexInTexture = 1; // This is just a temporary, not intended to change ALL sensors green
+			this.blockIndexInTexture = 1; // This is just temporary, not intended to change ALL sensors green
 			return true; 
 		}
 		else

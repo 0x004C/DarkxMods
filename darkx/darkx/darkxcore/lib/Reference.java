@@ -11,6 +11,6 @@ public class Reference {
     public static final int SHIFTED_ID_RANGE_CORRECTION = 256;
     public static final String SERVER_PROXY_CLASS = "darkx.darkxcore.proxy.CommonProxy";
     public static final String CLIENT_PROXY_CLASS = "darkx.darkxcore.proxy.ClientProxy";
-    public static final String DEPENDENCY_CORE = "required-after:darkxCore@" + VERSION;
+    public static final String DEPENDENCY_CORE = "required-after:Darkx|DarkxCore@" + VERSION;
     
 }

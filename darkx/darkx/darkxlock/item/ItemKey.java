@@ -1,7 +1,7 @@
 package darkx.darkxlock.item;
 
-import darkx.darkxcore.lib.Reference;
 import net.minecraft.item.Item;
+import darkx.darkxcore.lib.Reference;
 
 public class ItemKey extends Item {
 

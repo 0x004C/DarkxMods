@@ -1,9 +1,8 @@
 package darkx.darkxcore.proxy;
 
-import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.network.packet.Packet;
 import net.minecraftforge.client.MinecraftForgeClient;
-import darkx.darkxcore.proxy.CommonProxy;
+import cpw.mods.fml.client.FMLClientHandler;
 
 public class ClientProxy extends CommonProxy {
 	

@@ -5,8 +5,8 @@ import java.util.logging.Logger;
 
 import cpw.mods.fml.common.FMLLog;
 
-public class LogHelper {
-	private static Logger logger = Logger.getLogger("darkxCore");
+public class Log {
+	private static Logger logger = Logger.getLogger("Darkx");
 
     public static void init() {
     	logger.setParent(FMLLog.getLogger());
