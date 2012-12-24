@@ -46,7 +46,7 @@ public class ItemFPSensor extends Item {
 		if (DarkxSInput.instance.sensor.canPlaceBlockAt(world, x, y, z))
         {
             --stack.stackSize;
-            world.setBlockAndMetadataWithNotify(x, y, z, info.id, side - 2);
+            world.setBlockAndMetadataWithNotify(x, y, z, DarkxSInput.instance.infoSensor.id, side - 2);
     		TileEntity te = world.getBlockTileEntity(x, y, z);
             if (te != null && te instanceof TileEntityFPSensor)
             {
