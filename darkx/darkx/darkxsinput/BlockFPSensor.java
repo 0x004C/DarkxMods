@@ -107,12 +107,14 @@ public class BlockFPSensor extends BlockContainer {
 	@Override
     public boolean isProvidingStrongPower(IBlockAccess iblockaccess, int x, int y, int z, int direction)
     {
-		TileEntityFPSensor te = (TileEntityFPSensor) iblockaccess.getBlockTileEntity(x, y, z);
-		if (te.isPowered)
+		int meta = iblockaccess.getBlockMetadata(x, y, z);
+		if (meta > 3)
 			return true;
 		else
 			return false;
     } 
+	
+	
 	
 	@Override
 	public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
@@ -120,33 +122,35 @@ public class BlockFPSensor extends BlockContainer {
 		if (!par1World.isRemote)
         {
 			TileEntityFPSensor te = (TileEntityFPSensor) par1World.getBlockTileEntity(par2, par3, par4);
-			if (te.getPrint(par5EntityPlayer, par1World)) {
-				if (!te.isPowered) {
-					te.isPowered = true;
+			int meta = par1World.getBlockMetadata(par2, par3, par4);
+			String owner = te.getPrint();
+			if (owner.contains(par5EntityPlayer.getEntityName())) {
+				if (!(meta > 3)) { // I know, it could be done with 'meta < 4'
+					par1World.setBlockMetadataWithNotify(par2, par3, par4, meta + 4);
 					NotifyNeightbours(par1World, par2, par3, par4);
-					//par1World.markBlockRangeForRenderUpdate(par2, par3, par4, par2, par3, par4); TODO: Add a nice renderer
 					par1World.playSoundEffect((double)par2 + 0.5D, (double)par3 + 0.5D, (double)par4 + 0.5D, "random.click", 0.3F, 0.6F);
 					par1World.scheduleBlockUpdate(par2, par3, par4, this.blockID, this.tickRate());
 				}
 				return true;
-			} else
-				return false;
+			} else {
+				DarkxSInput.instance.proxy.sendMessageToPlayer(par5EntityPlayer, "Fingerprint mismatch! You're not " + owner + ".");
+				return true;
+			}
         } else 
-        	return false;
+        	return true;
 	}
 	
 	public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
     {
         if (!par1World.isRemote)
         {
-        	TileEntityFPSensor te = (TileEntityFPSensor) par1World.getBlockTileEntity(par2, par3, par4);
-        	if (te.isPowered)
+        	int meta = par1World.getBlockMetadata(par2, par3, par4);
+        	if (meta > 3)
         	{
-        		te.isPowered = false;
+        		par1World.setBlockMetadataWithNotify(par2, par3, par4, meta - 4);
+        		par1World.markBlockForUpdate(par2, par3, par4);
         		NotifyNeightbours(par1World, par2, par3, par4);
-        		par1World.playSoundEffect((double)par2 + 0.5D, (double)par3 + 0.5D, (double)par4 + 0.5D, "random.click", 0.3F, 0.5F);
-                //par1World.markBlockRangeForRenderUpdate(par2, par3, par4, par2, par3, par4); TODO: Render here too
-        	}
+        		par1World.playSoundEffect((double)par2 + 0.5D, (double)par3 + 0.5D, (double)par4 + 0.5D, "random.click", 0.3F, 0.5F);        	}
         }
     }
 	
@@ -166,27 +170,25 @@ public class BlockFPSensor extends BlockContainer {
 	public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int x, int y, int z)
     {
 		int side = par1IBlockAccess.getBlockMetadata(x, y, z);
-		float minH = 0.4F;
-		float maxH = 0.8F;
-		float minW = 1F;
-		float maxW;
-		float maxD;
-		float offW = 1F - ((3F / 2F / 16F) / 2);
-		float offD = 2F / 2F / 16F;
 		
-		minH = minH / 2 / 16;
-		maxH = maxH / 2 / 16;
-		minW = minW / 2 / 16;
-		maxW = minW / 2 / 16;
+		float w = 6F / 2;
+		float h1 = 15F;
+		float h2 = 25F;
+		float d = 2F;
 		
-		if (side % 6 == 2) // NORTH
-			this.setBlockBounds(minW, minH, 1.0F - offD, maxW, maxH, 1.0F);
-		else if (side % 6 == 3) // SOUTH
-			this.setBlockBounds(minW, minH, 0.0F, maxW, maxH, offD);
-		else if (side % 6 == 4) // WEST
-			this.setBlockBounds(1.0F - offD, minH, minW, 1.0F, maxH, maxW);
-		else if (side % 6 == 5) // EAST
-			this.setBlockBounds(0.0F, minH, minW, offD, maxH, maxW);
+		w = w / 2 / 16;
+		h1 = h1 / 2 / 16;
+		h2 = h2 / 2 / 16;
+		d = d / 2 / 16;
+		
+		if (side % 4 == 0) // SOUTH
+			this.setBlockBounds(0.5F - w, h1, 1F, 0.5F + w, h2, 1F - d);
+		else if (side % 4 == 1) // NORTH
+			this.setBlockBounds(0.5F - w, h1, 0F, 0.5F + w, h2, d);
+		else if (side % 4 == 2) // EAST
+			this.setBlockBounds(1F, h1, 0.5F - w, 1F - d, h2, 0.5F + w);
+		else if (side % 4 == 3) // WEST
+			this.setBlockBounds(0F, h1, 0.5F - w, d, h2, 0.5F + w);
 		else
 			return;
 	
@@ -198,7 +200,7 @@ public class BlockFPSensor extends BlockContainer {
 	}
 	
 	private Point getBlockAttachedTo(World world, int x, int y, int z) {
-		ForgeDirection dir = ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z));
+		ForgeDirection dir = ForgeDirection.getOrientation((world.getBlockMetadata(x, y, z) % 4) + 2);
 		dir = dir.getOpposite();
 		if (dir == ForgeDirection.NORTH)
 			--z;

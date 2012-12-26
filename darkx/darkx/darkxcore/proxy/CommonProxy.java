@@ -13,6 +13,11 @@ public class CommonProxy {
 		EntityPlayerMP player = (EntityPlayerMP) entityplayer;
 		player.playerNetServerHandler.sendPacketToPlayer(packet.getPacket());
 	}
+	
+	public void sendMessageToPlayer(EntityPlayer entityplayer, String msg) {
+		EntityPlayerMP player = (EntityPlayerMP) entityplayer;
+		player.sendChatToPlayer(msg);
+	}
 
 	public void sendToServer(Packet packet) {}
 

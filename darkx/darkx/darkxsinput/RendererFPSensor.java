@@ -2,6 +2,10 @@ package darkx.darkxsinput;
 
 import org.lwjgl.opengl.GL11;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import darkx.DarkxSInput;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
@@ -49,37 +53,42 @@ public class RendererFPSensor extends TileEntitySpecialRenderer {
 	@Override
 	public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float var8) {
 		TileEntityFPSensor sensor = (TileEntityFPSensor) entity;
-		render(sensor.getBlockMetadata(), sensor.isPowered, x, y, z);
+		int meta = entity.getBlockMetadata();
+		render(meta, x, y, z);
 	}
 
-	private void render(int side, boolean isPowered, double x, double y, double z) {
+	@SideOnly(Side.CLIENT) // Just to make sure
+	private void render(int meta, double x, double y, double z) {
 		GL11.glPushMatrix();
 		GL11.glDisable(GL11.GL_LIGHTING);
 		
 		GL11.glTranslated(x, y, z);
 		
 		float r = 0;
-		if (side == 2) {
+		if (meta % 4 == 0) {
 			r = 0;
-		} else if (side == 3) {
+		} else if (meta % 4 == 1) {
 			r = (float)(Math.PI);
-		} else if (side == 4) {
+		} else if (meta % 4 == 2) {
 			r = (float)(Math.PI / 2);
-		} else if (side == 5) {
+		} else if (meta % 4 == 3) {
 			r = (float)(3 * Math.PI / 2);
 		}
 		 
 		
 		// Edges
-		ForgeHooksClient.bindTexture("/resources/darkx/darkxsinput/fpsensor.png", 0);
+		String texture;
+		if (meta > 3)
+			texture = "/resources/darkx/darkxsinput/fpsensoron.png";
+		else
+			texture = "/resources/darkx/darkxsinput/fpsensoroff.png";
+		
+		ForgeHooksClient.bindTexture(texture, 0);
 		setRotation(edgeBottom, 0F, r, 0F);
 		setRotation(edgeTop, 0F, r, 0F);
+		setRotation(panel, 0F, r, 0F);
 		edgeBottom.render(scale);
 		edgeTop.render(scale);
-		
-		// Panel
-		ForgeHooksClient.bindTexture("/resources/darkx/darkxsinput/fpsensor.png", 0);
-		setRotation(panel, 0F, r, 0F);
 		panel.render(scale);
 		
 		GL11.glEnable(GL11.GL_LIGHTING);

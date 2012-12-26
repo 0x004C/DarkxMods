@@ -98,7 +98,7 @@ public class DarkxSInput {
 		LanguageRegistry.addName(itemSensor, "Fingerprint Sensor");
 	}
 	
-	//@SideOnly(Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	private void initClient() {
 		infoSensor.renderId = RenderingRegistry.getNextAvailableRenderId();
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFPSensor.class, new RendererFPSensor());

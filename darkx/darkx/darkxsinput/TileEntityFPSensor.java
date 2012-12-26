@@ -10,17 +10,9 @@ import net.minecraftforge.common.ForgeDirection;
 public class TileEntityFPSensor extends TileEntity {
 	
 	public String owner = "";
-	public boolean isPowered = false;
 
-	public boolean getPrint(EntityPlayer par5EntityPlayer, World world) {
-		if(owner.equals(par5EntityPlayer.getEntityName()))
-        {
-			return true;
-        }
-		else
-		{
-			return false;
-		}
+	public String getPrint() {
+		return owner;
 	}
 
 	public void setPrint(EntityLiving entityliving) {
