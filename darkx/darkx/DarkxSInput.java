@@ -4,10 +4,11 @@ import java.io.File;
 import java.util.logging.Level;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.StepSound;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
@@ -20,6 +21,8 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import darkx.darkxcore.lib.BlockInfo;
 import darkx.darkxcore.lib.ItemInfo;
 import darkx.darkxcore.lib.Log;
@@ -28,6 +31,7 @@ import darkx.darkxcore.proxy.CommonProxy;
 import darkx.darkxsinput.BlockFPSensor;
 import darkx.darkxsinput.BlockObsidianPressurePlate;
 import darkx.darkxsinput.ItemFPSensor;
+import darkx.darkxsinput.RendererFPSensor;
 import darkx.darkxsinput.TileEntityFPSensor;
 
 @Mod(modid="Darkx|DarkxSInput", name="Darkx's Special Inputs", version=Reference.VERSION, dependencies=Reference.DEPENDENCY_CORE)
@@ -35,8 +39,8 @@ import darkx.darkxsinput.TileEntityFPSensor;
 public class DarkxSInput {
 	
 	public BlockInfo infoPlate = new BlockInfo(1337, "obsidianPressurePlate", null, 0);
-	public BlockInfo infoSensor = new BlockInfo(1338, "fingerPrintSensor", "/darkx/darkxsinput/fpsensorblock.png", 0);
-	public ItemInfo infoItemSensor = new ItemInfo(28002, "fingerPrintSensorItem", "/darkx/darkxsinput/fpsensor.png", 0);
+	public BlockInfo infoSensor = new BlockInfo(1338, "fingerPrintSensor", "/resources/darkx/darkxsinput/fpsensorblock.png", 0);
+	public ItemInfo infoItemSensor = new ItemInfo(28002, "fingerPrintSensorItem", "/resources/darkx/darkxsinput/fpsensoritem.png", 0);
 
 	public Block obsidianPPlate;
 	public Block sensor;
@@ -71,18 +75,13 @@ public class DarkxSInput {
 	
 	@Init
 	public void load(FMLInitializationEvent event) {
-		proxy.registerRenderers();
-		
-		StepSound soundStoneFootstep = new StepSound("stone", 1.0F, 1.0F);
-
-		proxy.addTexture(infoSensor.texture.location);
-		proxy.addTexture(infoItemSensor.texture.location);
+		initClient();
 		
 		// FingerPrint Sensor
 		itemSensor = new ItemFPSensor();
 		
 		// FingerPrint Sensor ---
-		sensor = (new BlockFPSensor()).setHardness(0.5F).setStepSound(soundStoneFootstep).setBlockName(infoSensor.name).setRequiresSelfNotify();
+		sensor = new BlockFPSensor();
 		GameRegistry.registerBlock(sensor, infoSensor.name);
 		GameRegistry.registerTileEntity(TileEntityFPSensor.class, "fpSensor");
 		GameRegistry.addRecipe(new ItemStack(itemSensor), "r","i", 
@@ -90,13 +89,22 @@ public class DarkxSInput {
 				'i', new ItemStack(Item.ingotIron));
 		
 		// Obsidian Pressure Plate
-		obsidianPPlate = new BlockObsidianPressurePlate().setHardness(0.5F).setStepSound(soundStoneFootstep).setBlockName("pressurePlate").setRequiresSelfNotify();
+		obsidianPPlate = new BlockObsidianPressurePlate();
 		GameRegistry.registerBlock(obsidianPPlate, infoPlate.name);
 		GameRegistry.addRecipe(new ItemStack(obsidianPPlate), "oo", 
 				'o', new ItemStack(Block.obsidian));
 		
 		// LanguageRegistry
 		LanguageRegistry.addName(itemSensor, "Fingerprint Sensor");
+	}
+	
+	//@SideOnly(Side.CLIENT)
+	private void initClient() {
+		infoSensor.renderId = RenderingRegistry.getNextAvailableRenderId();
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFPSensor.class, new RendererFPSensor());
+		
+		proxy.addTexture(infoSensor.texture.location);
+		proxy.addTexture(infoItemSensor.texture.location);
 	}
 	
 	@PostInit

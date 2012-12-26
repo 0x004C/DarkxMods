@@ -5,13 +5,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 
 public class TileEntityFPSensor extends TileEntity {
 	
-	String owner = "";
+	public String owner = "";
+	public boolean isPowered = false;
 
 	public boolean getPrint(EntityPlayer par5EntityPlayer, World world) {
-		//world.notifyBlockChange(xCoord, yCoord, zCoord, 2);
 		if(owner.equals(par5EntityPlayer.getEntityName()))
         {
 			return true;
@@ -26,8 +27,7 @@ public class TileEntityFPSensor extends TileEntity {
 		EntityPlayer entityPlayer = (EntityPlayer) entityliving;
 		this.owner = entityPlayer.getEntityName();
 	}
-	
-	
+		
 	@Override
 	public void readFromNBT(NBTTagCompound nbt)
 	{

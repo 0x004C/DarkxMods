@@ -26,7 +26,7 @@ public class ItemFPSensor extends Item {
         return DarkxSInput.instance.infoItemSensor.texture.location;
 }
 	
-	@Override //TODO: check if block has GUI to be opened, and apply crouch placing :)
+	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
     {		
 		if (side == 0 | side == 1)
@@ -46,7 +46,7 @@ public class ItemFPSensor extends Item {
 		if (DarkxSInput.instance.sensor.canPlaceBlockAt(world, x, y, z))
         {
             --stack.stackSize;
-            world.setBlockAndMetadataWithNotify(x, y, z, DarkxSInput.instance.infoSensor.id, side - 2);
+            world.setBlockAndMetadataWithNotify(x, y, z, DarkxSInput.instance.infoSensor.id, side);
     		TileEntity te = world.getBlockTileEntity(x, y, z);
             if (te != null && te instanceof TileEntityFPSensor)
             {

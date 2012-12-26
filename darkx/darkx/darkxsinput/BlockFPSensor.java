@@ -20,25 +20,19 @@ public class BlockFPSensor extends BlockContainer {
 	public static BlockInfo info;
 
 	public BlockFPSensor() {
-		super(DarkxSInput.instance.infoSensor.id, 0, Material.circuits);
-		this.setTickRandomly(true);
+		super(DarkxSInput.instance.infoSensor.id, Material.circuits);
 		this.info = DarkxSInput.instance.infoSensor;
-	}
-	
-	public String getTextureFile () {
-        return DarkxSInput.instance.infoSensor.texture.location;
+		this.setHardness(0.5F);
+		this.setBlockName(info.name);
+		this.setTickRandomly(true);
 	}
 	
 	@Override
-	public int tickRate()
-	{
-	         return 30;
-	}
-	@Override
-	public boolean isOpaqueCube()
-	{
-	         return false;
-	}
+    public TileEntity createNewTileEntity(World par1World)
+    {
+    	return new TileEntityFPSensor();
+    }  
+	
 	@Override
 	public boolean renderAsNormalBlock()
 	{
@@ -46,10 +40,15 @@ public class BlockFPSensor extends BlockContainer {
 	}
 	
 	@Override
-	public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
-    {
-        return null;
-    }
+	public boolean isOpaqueCube()
+	{
+	         return false;
+	}
+	
+	@Override
+    public int getRenderType() {
+		return DarkxSInput.instance.infoSensor.renderId;
+	}
 	
 	@Override
 	public int idDropped(int par1, Random par2Random, int par3)
@@ -58,11 +57,23 @@ public class BlockFPSensor extends BlockContainer {
     }
 	
 	@Override
+	public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    {
+        return null;
+    }
+	
+	@Override
 	public void breakBlock(World world, int x, int y, int z, int par5, int par6)
     {
 		super.breakBlock(world, x, y, z, par5, par6);
 		NotifyNeightbours(world, x, y, z);
     }
+	
+	@Override
+	public int tickRate()
+	{
+	         return 30;
+	}
 	
 	@Override
 	public void onNeighborBlockChange(World world, int x, int y, int z, int par5)
@@ -96,35 +107,22 @@ public class BlockFPSensor extends BlockContainer {
 	@Override
     public boolean isProvidingStrongPower(IBlockAccess iblockaccess, int x, int y, int z, int direction)
     {
-		int meta = iblockaccess.getBlockMetadata(x, y, z);
-		if (meta > 3)
-		{
-			this.blockIndexInTexture = 1; // This is just temporary, not intended to change ALL sensors green
-			return true; 
-		}
+		TileEntityFPSensor te = (TileEntityFPSensor) iblockaccess.getBlockTileEntity(x, y, z);
+		if (te.isPowered)
+			return true;
 		else
-		{
-			this.blockIndexInTexture = 0;
 			return false;
-		}
-    }
-
-    public TileEntity createNewTileEntity(World par1World)
-    {
-    	return new TileEntityFPSensor();
-    }   
+    } 
 	
 	@Override
 	public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
 	{
-		if(!par1World.isRemote)
+		if (!par1World.isRemote)
         {
 			TileEntityFPSensor te = (TileEntityFPSensor) par1World.getBlockTileEntity(par2, par3, par4);
 			if (te.getPrint(par5EntityPlayer, par1World)) {
-				
-				int meta = par1World.getBlockMetadata(par2, par3, par4);
-				if (meta < 4) {
-					par1World.setBlockMetadataWithNotify(par2, par3, par4, meta + 4);
+				if (!te.isPowered) {
+					te.isPowered = true;
 					NotifyNeightbours(par1World, par2, par3, par4);
 					//par1World.markBlockRangeForRenderUpdate(par2, par3, par4, par2, par3, par4); TODO: Add a nice renderer
 					par1World.playSoundEffect((double)par2 + 0.5D, (double)par3 + 0.5D, (double)par4 + 0.5D, "random.click", 0.3F, 0.6F);
@@ -141,10 +139,10 @@ public class BlockFPSensor extends BlockContainer {
     {
         if (!par1World.isRemote)
         {
-        	int meta = par1World.getBlockMetadata(par2, par3, par4);
-        	if (meta > 3)
+        	TileEntityFPSensor te = (TileEntityFPSensor) par1World.getBlockTileEntity(par2, par3, par4);
+        	if (te.isPowered)
         	{
-        		par1World.setBlockMetadataWithNotify(par2, par3, par4, meta - 4);
+        		te.isPowered = false;
         		NotifyNeightbours(par1World, par2, par3, par4);
         		par1World.playSoundEffect((double)par2 + 0.5D, (double)par3 + 0.5D, (double)par4 + 0.5D, "random.click", 0.3F, 0.5F);
                 //par1World.markBlockRangeForRenderUpdate(par2, par3, par4, par2, par3, par4); TODO: Render here too
@@ -163,30 +161,44 @@ public class BlockFPSensor extends BlockContainer {
         return false;
     }
 	
+
 	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int x, int y, int z)
     {
 		int side = par1IBlockAccess.getBlockMetadata(x, y, z);
 		float minH = 0.4F;
 		float maxH = 0.8F;
-		float offW = 0.375F;
-		float offD = 0.0165F;
+		float minW = 1F;
+		float maxW;
+		float maxD;
+		float offW = 1F - ((3F / 2F / 16F) / 2);
+		float offD = 2F / 2F / 16F;
 		
-		if (side % 4 == 0)
-			this.setBlockBounds(offW, minH, 1.0F - offD, 1.0F - offW, maxH, 1.0F);
-		else if (side % 4 == 1)
-			this.setBlockBounds(offW, minH, 0.0F, 1.0F - offW, maxH, offD);
-		else if (side % 4 == 2)
-			this.setBlockBounds(1.0F - offD, minH, offW, 1.0F, maxH, 1.0F - offW);
-		else if (side % 4 == 3)
-			this.setBlockBounds(0.0F, minH, offW, offD, maxH, 1.0F - offW);
+		minH = minH / 2 / 16;
+		maxH = maxH / 2 / 16;
+		minW = minW / 2 / 16;
+		maxW = minW / 2 / 16;
+		
+		if (side % 6 == 2) // NORTH
+			this.setBlockBounds(minW, minH, 1.0F - offD, maxW, maxH, 1.0F);
+		else if (side % 6 == 3) // SOUTH
+			this.setBlockBounds(minW, minH, 0.0F, maxW, maxH, offD);
+		else if (side % 6 == 4) // WEST
+			this.setBlockBounds(1.0F - offD, minH, minW, 1.0F, maxH, maxW);
+		else if (side % 6 == 5) // EAST
+			this.setBlockBounds(0.0F, minH, minW, offD, maxH, maxW);
 		else
 			return;
-		
+	
     }
 	
+	@Override
+	public void onBlockAdded(World world, int x, int y, int z) {
+		super.onBlockAdded(world, x, y, z);
+	}
+	
 	private Point getBlockAttachedTo(World world, int x, int y, int z) {
-		ForgeDirection dir = ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z) % 4 + 2);
+		ForgeDirection dir = ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z));
 		dir = dir.getOpposite();
 		if (dir == ForgeDirection.NORTH)
 			--z;
@@ -210,4 +222,5 @@ public class BlockFPSensor extends BlockContainer {
 			world.notifyBlocksOfNeighborChange(nb.x, nb.y, nb.z, this.blockID);
 		}
 	}
+	
 }
