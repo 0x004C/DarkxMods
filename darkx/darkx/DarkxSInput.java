@@ -10,6 +10,7 @@ import net.minecraftforge.common.Configuration;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
@@ -75,7 +76,10 @@ public class DarkxSInput {
 	
 	@Init
 	public void load(FMLInitializationEvent event) {
-		initClient();
+		Side side = FMLCommonHandler.instance().getEffectiveSide();
+		if (side == Side.CLIENT) {
+			initClient();
+		}
 		
 		// FingerPrint Sensor
 		itemSensor = new ItemFPSensor();

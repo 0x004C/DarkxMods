@@ -37,7 +37,7 @@ public class PacketAuthQ extends PacketDarkx {
 	public void execute(INetworkManager network, Player player)
 	{
 		if (!FMLClientHandler.instance().getClient().isSingleplayer())
-			DarkxCore.proxy.sendToServer(new PacketAuthA(PacketIds.AUTH_A, "AsylumCertified").getPacket());
+			DarkxCore.proxy.sendToServer(new PacketAuthA(PacketIds.AUTH_A, FMLClientHandler.instance().getClient().session.sessionId).getPacket());
 	}
 	
 }
