@@ -22,7 +22,7 @@ public class BlockFPSensor extends BlockContainer {
 	public BlockFPSensor() {
 		super(DarkxSInput.instance.infoSensor.id, Material.circuits);
 		this.info = DarkxSInput.instance.infoSensor;
-		this.setHardness(0.5F);
+		this.setHardness(6000000.0F);
 		this.setBlockName(info.name);
 		this.setTickRandomly(true);
 	}
@@ -114,7 +114,19 @@ public class BlockFPSensor extends BlockContainer {
 			return false;
     } 
 	
-	
+	@Override //TODO: Do I need to update tile entity for SMP?.. Maybe. We'll see that
+	public void onBlockClicked(World world, int x, int y, int z, EntityPlayer entityPlayer)
+	{
+		TileEntityFPSensor tileEntity = (TileEntityFPSensor) world.getBlockTileEntity(x, y, z);
+		if (entityPlayer.username == tileEntity.owner)
+		{
+			this.setHardness(0.5F);
+		} 
+		else 
+		{
+			this.setHardness(6000000.0F);
+		}
+	}
 	
 	@Override
 	public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
