@@ -1,10 +1,6 @@
 package darkx.darkxauth.handlers;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.dedicated.DedicatedServer;
-import net.minecraft.server.integrated.IntegratedServer;
-import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.IPlayerTracker;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
