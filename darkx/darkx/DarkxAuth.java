@@ -10,6 +10,8 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import darkx.darkxauth.handlers.PlayerTracker;
 import darkx.darkxcore.lib.Log;
 import darkx.darkxcore.lib.Reference;
@@ -32,9 +34,9 @@ public class DarkxAuth {
 		Log.log("DarkxAuth loaded.");
 	}
 	
+	@SideOnly(Side.SERVER)
 	@Init
 	public void load(FMLInitializationEvent event) {
-		proxy.registerRenderers();
 		GameRegistry.registerPlayerTracker(new PlayerTracker());
 	}
 	
