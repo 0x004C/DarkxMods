@@ -1,6 +1,7 @@
 package darkx.darkxauth.handlers;
 
 import net.minecraft.entity.player.EntityPlayer;
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.IPlayerTracker;
 import darkx.DarkxCore;
 import darkx.darkxauth.network.PacketAuthQ;
@@ -11,7 +12,8 @@ public class PlayerTracker implements IPlayerTracker {
 
 	@Override
 	public void onPlayerLogin(EntityPlayer player) {
-		DarkxCore.proxy.sendToPlayer(player, new PacketAuthQ(PacketIds.AUTH_Q));	
+		if (FMLClientHandler.instance().getServer().isDedicatedServer())
+			DarkxCore.proxy.sendToPlayer(player, new PacketAuthQ(PacketIds.AUTH_Q));	
 	}
 
 	@Override
