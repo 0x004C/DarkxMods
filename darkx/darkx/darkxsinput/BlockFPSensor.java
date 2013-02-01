@@ -53,7 +53,7 @@ public class BlockFPSensor extends BlockContainer {
 	@Override
 	public int idDropped(int par1, Random par2Random, int par3)
     {
-        return DarkxSInput.instance.itemSensor.shiftedIndex;
+        return DarkxSInput.instance.itemSensor.itemID;
     }
 	
 	@Override

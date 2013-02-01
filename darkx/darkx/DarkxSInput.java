@@ -9,8 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
@@ -39,9 +39,9 @@ import darkx.darkxsinput.TileEntityFPSensor;
 
 public class DarkxSInput {
 	
-	public BlockInfo infoPlate = new BlockInfo(1337, "obsidianPressurePlate", null, 0);
-	public BlockInfo infoSensor = new BlockInfo(1338, "fingerPrintSensor", "/resources/darkx/darkxsinput/fpsensorblock.png", 0);
-	public ItemInfo infoItemSensor = new ItemInfo(28002, "fingerPrintSensorItem", "/resources/darkx/darkxsinput/fpsensoritem.png", 0);
+	public static BlockInfo infoPlate = new BlockInfo(1337, "obsidianPressurePlate", null, 0);
+	public static BlockInfo infoSensor = new BlockInfo(1338, "fingerPrintSensor", "/resources/darkx/darkxsinput/fpsensorblock.png", 0);
+	public static ItemInfo infoItemSensor = new ItemInfo(28002, "fingerPrintSensorItem", "/resources/darkx/darkxsinput/fpsensoritem.png", 0);
 
 	public Block obsidianPPlate;
 	public Block sensor;
