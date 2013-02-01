@@ -15,7 +15,7 @@ import darkx.darkxcore.proxy.ClientProxy;
 import darkx.darkxcore.proxy.CommonProxy;
 
 
-@Mod(modid = "Darkx|DarkxCore", name = "DarkxCore", version = Reference.VERSION)
+@Mod(modid = "Darkx|DarkxCore", name = "DarkxMods", version = Reference.VERSION)
 //@NetworkMod(channels = { Reference.CHANNEL_NAME }, clientSideRequired = true, serverSideRequired = true)
 public class DarkxCore {
 

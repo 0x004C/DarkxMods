@@ -1,0 +1,62 @@
+[
+{
+  "modid": "Darkx|DarkxCore",
+  "name": "DarkxMods",
+  "description": "Darkx's mods ^^",
+  "version": "",
+  "credits": "DarkxKrist",
+  "logoFile": "",
+  "mcversion": "",
+  "url": "",
+  "updateUrl": "",
+  "authors": [ "DarkxKrist" ],
+  "parent":"",
+  "screenshots": [],
+  "dependencies": []
+},
+{
+  "modid": "Darkx|DarkxAddons",
+  "name": "Darkx's Addons",
+  "description": "Adds content to other mods! (Thermal Expansion)",
+  "version": "",
+  "credits": "DarkxKrist",
+  "logoFile": "",
+  "mcversion": "",
+  "url": "",
+  "updateUrl": "",
+  "authors": [ "DarkxKrist" ],
+  "parent":"Darkx|DarkxCore",
+  "screenshots": [],
+  "dependencies": []
+},
+{
+  "modid": "Darkx|DarkxAuth",
+  "name": "DarkxAuth",
+  "description": "Offline authentication system for my Asylum server.",
+  "version": "",
+  "credits": "DarkxKrist",
+  "logoFile": "",
+  "mcversion": "",
+  "url": "",
+  "updateUrl": "",
+  "authors": [ "DarkxKrist" ],
+  "parent":"Darkx|DarkxCore",
+  "screenshots": [],
+  "dependencies": []
+},
+{
+  "modid": "Darkx|DarkxSInput",
+  "name": "Darkx's Special Inputs",
+  "description": "Adds obsidian pressureplate and fingerprint sensor.",
+  "version": "",
+  "credits": "DarkxKrist",
+  "logoFile": "",
+  "mcversion": "",
+  "url": "",
+  "updateUrl": "",
+  "authors": [ "DarkxKrist" ],
+  "parent":"Darkx|DarkxCore",
+  "screenshots": [],
+  "dependencies": []
+}
+]
