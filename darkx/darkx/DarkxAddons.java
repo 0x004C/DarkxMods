@@ -88,7 +88,7 @@ public class DarkxAddons {
 		ItemStack liquidRedstone = ItemRegistry.getItem("liquidRedstone", 1);
 		ItemStack liquidEnder = ItemRegistry.getItem("liquidEnder", 1);
 		
-		LiquidStack molten = new LiquidStack(liquidRedstone.itemID, 25, liquidRedstone.getItemDamage());
+		LiquidStack molten = new LiquidStack(liquidRedstone.itemID, 10, liquidRedstone.getItemDamage());
 		LiquidStack ender = new LiquidStack(liquidEnder.itemID, 25, liquidEnder.getItemDamage());
 		LiquidStack enderFull =  new LiquidStack(liquidEnder.itemID, 250, liquidEnder.getItemDamage());
 		
